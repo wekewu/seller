@@ -1,15 +1,40 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import PageHeader from 'components/PageHeader/header'
+import goods from 'components/goods/goods'
+import ratings from 'components/ratings/ratings'
+import seller from 'components/seller/seller'
 
 Vue.use(Router)
 
+/* const routes = [{
+  path: '/',
+  redirect: '/goods'
+}, {
+  path: '/goods',
+  component: goods
+}, {
+  path: '/ratings',
+  component: ratings
+}, {
+  path: '/seller',
+  component: seller
+}] */
+
 export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'head',
-      component: PageHeader
-    }
-  ]
+  linkActiveClass: 'active',
+  // routes,
+  routes: [{
+    path: '/',
+    // 重定向
+    redirect: '/goods'
+  }, {
+    path: '/goods',
+    component: goods
+  }, {
+    path: '/ratings',
+    component: ratings
+  }, {
+    path: '/seller',
+    component: seller
+  }]
 })

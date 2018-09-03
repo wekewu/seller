@@ -1,10 +1,10 @@
 <template>
-  <div class="header">我是头部</div>
+  <div class="wrapper">goods</div>
 </template>
 
 <script>
 export default {
-  name: 'PageHeader'
+  name: 'goods'
 }
 </script>
 
