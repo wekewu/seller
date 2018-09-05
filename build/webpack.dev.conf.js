@@ -10,7 +10,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
 
-/* 数据配置 DIY */
+/* 模拟数据配置 */
 const appData = require('../static/mock/data.json')
 const seller = appData.seller
 const goods = appData.goods
@@ -28,7 +28,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
 
   // these devServer options should be customized in /config/index.js
   devServer: {
-    /* 数据配置 DIY */
+    /* 模拟数据配置（实现数据接口） */
+    /* 这里使用仿冒数据实现接口（可以改用proxyTable{ }进行路径转发，把data.json文件拆成goods.json、ratings.json、seller.json三个文件） */
     before(app) {
       app.get('/api/seller', function(req, res) {
         res.json({

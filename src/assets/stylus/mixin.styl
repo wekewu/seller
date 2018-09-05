@@ -1,0 +1,8 @@
+bgImg($url)
+  background: transparent url($url + '@2x.png') no-repeat center / cover
+  @media (-webkit-min-device-pixel-ratio: 3),(min-device-pixel-ratio: 3)
+    background-image: url($url + '@3x.png')
+ellipse()
+  white-space: nowrap
+  text-overflow: ellipsis
+  overflow: hidden
