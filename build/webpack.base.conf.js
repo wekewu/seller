@@ -39,7 +39,7 @@ module.exports = {
       '@': resolve('src'),
       'components': resolve('src/components'),
       'assets': resolve('src/assets'),
-      'stylus': resolve('src/assets/stylus')
+      'styles': resolve('src/assets/styles')
     }
   },
   module: {

@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import PageHeader from 'components/PageHeader/header'
+import PageHeader from 'components/pages/PageHeader/header'
 import axios from 'axios'
 
 // 请求状态码赋值给常量好处：语义化，如果后期变更状态码值只需改动一处。
