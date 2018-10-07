@@ -11,8 +11,8 @@
         </div>
         <div class="description">{{seller.description}} / {{seller.deliveryTime}}分钟送达</div>
         <div v-if="seller.supports" class="support">
-          <!-- 值跟类名映射，类名决定显示哪张图片 -->
-          <span class="icon" :class="classMap[seller.supports[0].type]"></span>
+          <!--图标组件-->
+          <icons v-if="seller.supports[0].type >= 0" :sub="seller.supports[0].type"></icons>
           <span class="text">{{seller.supports[0].description}}</span>
         </div>
         <div v-if="seller.supports" class="support-count" @click="showDatail">
@@ -46,7 +46,8 @@
               </div>
               <ul v-if="seller.supports" class="supports">
                 <li class="support-item" v-for="item in seller.supports" :key="item.type">
-                  <span class="icon" :class="classMap[item.type]"></span>{{item.description}}
+                  <!--图标组件-->
+                  <icons v-if="item.type >= 0" :sub="item.type" :size="1"></icons>{{item.description}}
                 </li>
               </ul>
             </div>
@@ -72,6 +73,7 @@
 
 <script>
 import star from 'components/common/star/star'
+import icons from 'components/common/icons/icon'
 export default {
   name: 'PageHeader',
   props: {
@@ -79,8 +81,6 @@ export default {
   },
   data () {
     return {
-      // 用于数组下标映射
-      classMap: ['decrease', 'discount', 'special', 'invoice', 'guarantee'],
       datailShow: false
     }
   },
@@ -90,7 +90,8 @@ export default {
     }
   },
   components: {
-    star
+    star,
+    icons
   }
 }
 </script>
@@ -137,22 +138,6 @@ export default {
         .support
           margin-bottom: .04rem
           font-size: 0
-          .icon
-            display: inline-block
-            margin-right: .08rem
-            vertical-align: top
-            width: .24rem
-            height: .24rem
-            &.decrease
-              bgImg('images/decrease_1')
-            &.discount
-              bgImg('images/discount_1')
-            &.guarantee
-              bgImg('images/guarantee_1')
-            &.invoice
-              bgImg('images/invoice_1')
-            &.special
-              bgImg('images/special_1')
           .text
             /* 手机上支持10px字体大小 */
             font-size: .2rem
@@ -270,22 +255,6 @@ export default {
                 line-height: .24rem
                 &:last-child
                   margin-bottom: 0
-              .icon
-                display: inline-block
-                margin-right: .12rem
-                vertical-align: sub
-                width: .32rem
-                height: .32rem
-                &.decrease
-                  bgImg('images/decrease_2')
-                &.discount
-                  bgImg('images/discount_2')
-                &.guarantee
-                  bgImg('images/guarantee_2')
-                &.invoice
-                  bgImg('images/invoice_2')
-                &.special
-                  bgImg('images/special_2')
             .overview
               padding-top: .48rem
               line-height: .4rem

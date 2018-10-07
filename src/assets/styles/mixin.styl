@@ -1,3 +1,14 @@
+icon($num)
+  &.decrease
+    bgImg('images/decrease_'+$num)
+  &.discount
+    bgImg('images/discount_'+$num)
+  &.guarantee
+    bgImg('images/guarantee_'+$num)
+  &.invoice
+    bgImg('images/invoice_'+$num)
+  &.special
+    bgImg('images/special_'+$num)
 bgImg($url)
   background: transparent url($url + '@2x.png') no-repeat center / cover
   @media (-webkit-min-device-pixel-ratio: 3),(min-device-pixel-ratio: 3)
