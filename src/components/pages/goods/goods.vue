@@ -36,18 +36,30 @@
                   <span class="now"><em class="unit">￥</em>{{food.price}}</span>
                   <span v-if="food.oldPrice" class="before"><em class="unit">￥</em>{{food.oldPrice}}</span>
                 </div>
+                <div class="counterWrapper">
+                  <!--调用计数器组件，:pro="food" 传入当前商品数据-->
+                  <counter :pro="food"></counter>
+                </div>
               </div>
             </li>
           </ul>
         </li>
       </ul>
     </div>
+    <!--购物车-->
+    <!--向购车组件传递：deliveryPrice配送费，minPrice起送费-->
+    <shopcart
+      :delivery-price="seller.deliveryPrice"
+      :min-price="seller.minPrice"
+    ></shopcart>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import icons from 'components/common/icons/icon'
+import shopcart from 'components/pages/shopcart/shopcart'
+import counter from 'components/common/counter/counter'
 // 导入better-scroll
 import BScroll from 'better-scroll'
 
@@ -57,16 +69,18 @@ const ERRNO_OK = 0
 export default {
   name: 'goods',
   components: {
-    icons
+    icons,
+    shopcart,
+    counter
   },
   props: {
-    seller: {
+    seller: { // 接收卖家数据（来源：App.vue <router-view :seller="seller"/>）
       type: Object
     }
   },
   data () {
     return {
-      goods: [],
+      goods: [], // 接收商品数据
       listHeight: [], // 存放食物列表每个分类的区间高度
       scrollY: 0 // 存放foods-wrapper容器当前滚动位置
     }
@@ -242,14 +256,14 @@ export default {
             font-weight: 700;
             .now
               position: relative
-              top: .2rem
+              top: 0.14rem;
               margin-right: .16rem
               font-size: .28rem
               font-weight: 700
               color: #f01414
             .before
               position: relative
-              top: .16rem
+              top: .12rem
               font-size: .2rem
               font-weight: 700
               text-decoration: line-through
@@ -257,4 +271,8 @@ export default {
             .unit
               font-size: .2rem
               font-style: normal
+          .counterWrapper
+            position: absolute
+            right: 0
+            bottom: .36rem
 </style>

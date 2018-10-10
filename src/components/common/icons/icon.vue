@@ -7,10 +7,10 @@
 export default {
   name: 'icons',
   props: {
-    sub: {
+    sub: { // sub 决定使用哪个类名（每个类名对应不同图标）
       type: Number
     },
-    size: {
+    size: { // size 决定图标尺寸
       type: Number,
       default: 0
     }
