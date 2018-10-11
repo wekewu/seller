@@ -47,10 +47,16 @@
       </ul>
     </div>
     <!--购物车-->
-    <!--向购车组件传递：deliveryPrice配送费，minPrice起送费-->
+    <!--
+      向购物车组件传递：
+        deliveryPrice配送费，
+        minPrice起送费，
+        selectPros所有被选择的商品集合
+    -->
     <shopcart
       :delivery-price="seller.deliveryPrice"
       :min-price="seller.minPrice"
+      :select-pros="selectPros"
     ></shopcart>
   </div>
 </template>
@@ -101,6 +107,20 @@ export default {
         }
       }
       return 0
+    },
+    /* 由于计数器插件（counter.vue）修改商品数量，
+    所以监听商品数量变化获得要添加到购物车的商品数据 */
+    selectPros () {
+      let products = [] // 每个被选择的商品数据均放在这个集合中
+      /* 进行两次遍历 */
+      this.goods.forEach((productKind) => { // 第一次遍历（产品分类）
+        productKind.foods.forEach((pro) => { // 第二次遍历（当前分类下的商品）
+          if (pro.count) { // 如果当前商品数量值存在，说明商品被选择。
+            products.push(pro) // 被选择商品存进数组
+          }
+        })
+      })
+      return products // 返回所有被选择的商品集合（数组）
     }
   },
   methods: {

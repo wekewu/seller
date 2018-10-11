@@ -24,16 +24,8 @@
 export default {
   name: 'shopcart',
   props: {
-    selectPros: { // 已选择商品数据（数组）
-      type: Array,
-      default () {
-        return [
-          {
-            price: 12,
-            count: 2
-          }
-        ]
-      }
+    selectPros: { // 全部已选择商品集合（数组）
+      type: Array
     },
     deliveryPrice: { // 配送费
       type: Number,

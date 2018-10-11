@@ -1,7 +1,12 @@
 <template>
   <div class="counter">
     <!-- 数量为0时，不显示减少、数量元素 -->
-    <div class="minus_count iconfont" v-show="pro.count > 0" @click="minusCount">&#xe652;</div>
+    <transition name="move">
+      <div class="minus_count iconfont"
+           v-show="pro.count > 0"
+           @click="minusCount"
+      >&#xe652;</div>
+    </transition>
     <div class="count" v-show="pro.count > 0">{{pro.count}}</div>
     <div class="add_count iconfont" @click="addCount">&#xe616;</div>
   </div>
@@ -51,6 +56,13 @@ export default {
         right: -.12rem
         bottom: -.12rem
         left: -.12rem
+    .minus_count
+      opacity: 1
+      transform: translate3D(0, 0, 0) rotate(0)
+      transition: all .4s linear
+      &.move-enter,&.move-leave-active /* 动画状态效果 */
+        opacity: 0
+        transform: translate3D(24px, 0, 0) rotate(360deg)
     .count
       display: inline-block
       vertical-align: top
