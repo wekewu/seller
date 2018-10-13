@@ -31,7 +31,7 @@ export default {
     },
     // 计数器数量减1
     minusCount () {
-      if (this.pro.count > 0) {
+      if (this.pro.count) {
         this.pro.count--
       }
     }
