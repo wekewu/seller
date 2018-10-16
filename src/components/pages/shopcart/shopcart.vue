@@ -23,17 +23,17 @@
     </div>
     <!-- 购物车列表 -->
     <transition name="flod">
-      <div class="cartList" v-show="show">
-        <div class="listHeader border-bottom">
+      <div class="cart-list" v-show="show">
+        <div class="list-header border-bottom">
           <span class="title">购物车</span>
           <span class="empty" @click="empty">清空</span>
         </div>
-        <div class="listContent" ref="listContent">
+        <div class="list-content" ref="listContent">
           <ul>
             <li class="product border-bottom" v-for="(pro, index) in selectPros" :key="index">
               <span class="name">{{pro.name}}</span>
               <div class="price"><span class="unit">￥</span>{{pro.price * pro.count}}</div>
-              <div class="counterWrapper">
+              <div class="counter-wrapper">
                 <counter :pro="pro"></counter>
               </div>
             </li>
@@ -125,7 +125,9 @@ export default {
           this.show = false // 不展开购物车列表
         }
         if (this.show) { // 因为购物车列表内容是会发生变化的，所以每次展开列表需要重新计算DOM高度
+          // 加载BScroll时机（购物车列表展开）
           this.$nextTick(() => { // 由数据变化再到DOM变化有个tick过程
+            // 因为会有多次展开购物车列表情景，所以判断下不必每次都初始化Better-Scroll
             if (!this.listContent) { // 第一次展开，初始化Better-Scroll
               /* this.listContent = new BScroll(this.$refs.listContent, {
                scrollbar: { // 启用滚动条
@@ -246,7 +248,7 @@ export default {
           &.enough
             color: #fff
             background-color: #00b43c
-    .cartList
+    .cart-list
       position: absolute
       top: 0
       left: 0
@@ -259,7 +261,7 @@ export default {
         transform: translate3D(0,0,0)
       &.flod-leave-active
         transform: translate3D(0,100%,0)
-      .listHeader
+      .list-header
         height: .8rem
         line-height: .8rem
         background-color: #f3f5f7
@@ -275,7 +277,7 @@ export default {
           padding: 0 .36rem
           font-size: .24rem
           color: #00a0dc
-      .listContent
+      .list-content
         padding: 0 .36rem;
         max-height: 4.4rem;
         overflow: hidden;
@@ -300,7 +302,7 @@ export default {
             .unit
               font-size: .2rem
               font-weight: normal
-          .counterWrapper
+          .counter-wrapper
             position: absolute
             top: .24rem
             right: 0

@@ -22,7 +22,12 @@
         <li v-for="item in goods" :key="item.name" class="food-list food-list-hook">
           <h1 class="title">{{item.name}}</h1>
           <ul v-if="item.foods">
-            <li v-for="food in item.foods" :key="food.name" class="food-item border-bottom">
+            <li
+              class="food-item border-bottom"
+              v-for="food in item.foods"
+              :key="food.name"
+              @click="_showDetail(food)"
+            >
               <div class="foodIcon">
                 <img :src="food.icon" alt="">
               </div>
@@ -36,7 +41,7 @@
                   <span class="now"><em class="unit">￥</em>{{food.price}}</span>
                   <span v-if="food.oldPrice" class="before"><em class="unit">￥</em>{{food.oldPrice}}</span>
                 </div>
-                <div class="counterWrapper">
+                <div class="counter-wrapper" @click.stop.prevent>
                   <!--调用计数器组件，:pro="food" 传入当前商品数据-->
                   <counter :pro="food"></counter>
                 </div>
@@ -58,6 +63,12 @@
       :min-price="seller.minPrice"
       :select-pros="selectPros"
     ></shopcart>
+    <!--点击商品查看商品详情页时，把当前商品数据传递给 detail.vue 组件-->
+    <!--ref="productDetail" 用于父组件调用子组件方法-->
+    <product-detail
+      :product-info="productInfo"
+      ref="productDetail"
+    ></product-detail>
   </div>
 </template>
 
@@ -66,6 +77,7 @@ import axios from 'axios'
 import icons from 'components/common/icons/icon'
 import shopcart from 'components/pages/shopcart/shopcart'
 import counter from 'components/common/counter/counter'
+import productDetail from 'components/pages/productDetail/detail'
 // 导入better-scroll
 import BScroll from 'better-scroll'
 
@@ -77,7 +89,8 @@ export default {
   components: {
     icons,
     shopcart,
-    counter
+    counter,
+    productDetail
   },
   props: {
     seller: { // 接收卖家数据（来源：App.vue <router-view :seller="seller"/>）
@@ -88,7 +101,8 @@ export default {
     return {
       goods: [], // 接收商品数据
       listHeight: [], // 存放食物列表每个分类的区间高度
-      scrollY: 0 // 存放foods-wrapper容器当前滚动位置
+      scrollY: 0, // 存放foods-wrapper容器当前滚动位置
+      productInfo: {} // 存储要传递给详情页组件的商品数据
     }
   },
   computed: {
@@ -187,6 +201,11 @@ export default {
     _followScrollMenu (index) {
       let menuList = this.$refs.menuWrapper.getElementsByClassName('menu-item-hook')
       this.menuScroll.scrollToElement(menuList[index], 300, 0, -100)
+    },
+    // 点击商品存储商品数据（用于商品详情页数据展示）
+    _showDetail (productData) {
+      this.productInfo = productData // 传递要查看详情的商品数据
+      this.$refs.productDetail.show() // 父组件调用子组件方法（显示详情页）
     }
   },
   mounted () {
@@ -247,11 +266,16 @@ export default {
           margin-bottom: 0
           &::before
             display: none
-        .foodIcon img
-          display: block
+        .foodIcon
+          overflow: hidden;
           width: 1.2rem
-          height: 1.2rem
-          object-fit: cover
+          height: 0;
+          padding-bottom: 1.2rem;
+          img
+            display: block
+            width: 1.2rem
+            height: 1.2rem
+            object-fit: cover
         .foodInfo
           flex: 1
           margin-left: .2rem
@@ -291,7 +315,7 @@ export default {
             .unit
               font-size: .2rem
               font-style: normal
-          .counterWrapper
+          .counter-wrapper
             position: absolute
             right: 0
             bottom: .36rem
