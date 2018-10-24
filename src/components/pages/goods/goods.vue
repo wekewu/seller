@@ -208,7 +208,7 @@ export default {
       this.$refs.productDetail.show() // 父组件调用子组件方法（显示详情页）
     }
   },
-  mounted () {
+  created () {
     this.getGoodsData()
   }
 }

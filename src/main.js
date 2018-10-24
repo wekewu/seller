@@ -5,9 +5,11 @@ import App from './App'
 import router from './router'
 import fastClick from 'fastclick'
 import 'styles/global_css.styl' // .styl后缀不能省略
+import scroll from 'components/common/BScroll/scroll' // 导入 scroll 组件
 
 Vue.config.productionTip = false
 fastClick.attach(document.body)
+Vue.component('scroll', scroll) // 把 scroll 组件注册为全局组件
 
 /* eslint-disable no-new */
 new Vue({

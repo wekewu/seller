@@ -43,7 +43,7 @@ export default {
       console.log(error)
     }
   },
-  mounted () {
+  created () {
     this.getHeaderData()
   }
 }
