@@ -45,6 +45,7 @@
             :select-type="selectType"
             :only-content="onlyContent"
             :type-desc="typeDesc"
+            @scroll-refresh="BScrollRefresh"
           ></rating-check>
         </div>
       </div>
@@ -110,6 +111,12 @@ export default {
       if (!this.productInfo.count) { // 如果数量值不存在或为零，赋值为1
         this.$set(this.productInfo, 'count', 1)
       }
+    },
+    // 刷新 BScroll
+    BScrollRefresh () {
+      this.$nextTick(() => {
+        this.scroll.refresh()
+      })
     }
   }
 }

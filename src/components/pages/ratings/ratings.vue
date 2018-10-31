@@ -27,7 +27,11 @@
         </div>
       </div>
       <split></split>
-      <rating-check :ratings="ratings" mode-type="complex"></rating-check>
+      <rating-check
+        :ratings="ratings"
+        @scroll-refresh="BScrollRefresh"
+        mode-type="complex"
+      ></rating-check>
     </div>
   </div>
 </template>
@@ -79,6 +83,11 @@ export default {
     },
     getRatingsErr (err) {
       console.log(err)
+    },
+    BScrollRefresh () { // 刷新 BScroll
+      this.$nextTick(() => {
+        this.scroll.refresh()
+      })
     }
   },
   created () {

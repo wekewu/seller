@@ -164,9 +164,11 @@ export default {
     },
     _selectType (type) { // 切换评论类型
       this.currentType = type // currentType值改变选项高亮跟着变
+      this.$emit('scroll-refresh') // 触发自定义事件 scroll-refresh，使父组件的 BScroll 刷新
     },
     _checkContent () { // 切换只看有内容的评价
       this.checkContent = !this.checkContent
+      this.$emit('scroll-refresh') // 触发自定义事件 scroll-refresh，使父组件的 BScroll 刷新
     },
     // 根据筛选条件显示评论
     _needShow (type, text) { // 遍历时传入每条评论的类型（type）和文本（text）用作显示判断
