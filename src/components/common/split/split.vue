@@ -14,5 +14,5 @@ export default {
     height: .32rem
     background-color: #f3f5f7
     &.border-topbottom::before, &.border-topbottom::after
-      border-color: rgba(7,17,27,.3)
+      border-color: rgba(7,17,27,.2)
 </style>

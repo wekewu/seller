@@ -21,3 +21,9 @@ export function formatDate (date, fmt) {
 function padLeftZero (str) {
   return ('00' + str).substr(str.length)
 }
+
+/*
+* JS获取当前时间的Unix时间戳
+* Math.round(new Date() / 1000) （秒）
+* Math.round(new Date()) (毫秒)
+*/

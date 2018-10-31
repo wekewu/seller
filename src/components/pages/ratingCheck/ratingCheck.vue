@@ -38,22 +38,54 @@
       <ul v-show="ratings && ratings.length">
         <li
           v-show="_needShow(rating.rateType, rating.text)"
-          v-for="rating in ratings"
-          :key="rating.username"
+          v-for="(rating, index) in ratings"
+          :key="index"
           class="rating-item border-bottom"
         >
-          <div class="user">
-            <span class="name">{{rating.username}}</span>
-            <img class="avatar" :src="rating.avatar" alt="">
+          <!-- 简洁评论内容区块 -->
+          <div class="simple"
+               v-if="modeType === 'simple' ? true : false"
+          >
+            <div class="user">
+              <span class="name">{{rating.username}}</span>
+              <img class="avatar" :src="rating.avatar" alt="">
+            </div>
+            <!-- _formatDate() 转化时间戳函数 -->
+            <div class="time">{{_formatDate(rating.rateTime)}}</div>
+            <p class="text">
+              <span
+                class="iconfont hand"
+                :class="{'highlight': rating.rateType === 1, 'gray': rating.rateType === 2}"
+              >{{rating.rateType === 1 ? '&#xe62a;' : '&#xe600;'}}</span>{{rating.text}}
+            </p>
           </div>
-          <!-- _formatDate() 转化时间戳函数 -->
-          <div class="time">{{_formatDate(rating.rateTime)}}</div>
-          <p class="text">
-            <span
-              class="iconfont hand"
-              :class="{'highlight': rating.rateType === 1, 'gray': rating.rateType === 2}"
-            >{{rating.rateType === 1 ? '&#xe62a;' : '&#xe600;'}}</span>{{rating.text}}
-          </p>
+          <!-- 详尽评论内容区块 -->
+          <div class="complex"
+               v-if="modeType === 'complex' ? true : false"
+          >
+            <div class="avatar">
+              <img :src="rating.avatar" alt="">
+            </div>
+            <div class="content">
+              <h1 class="name">{{rating.username}}</h1>
+              <div class="star-wrapper">
+                <star :score="rating.score"></star>
+                <span class="score">{{rating.score}}</span>
+              </div>
+              <p class="text">{{rating.text}}</p>
+              <div class="recommend" v-if="rating.recommend.length > 0">
+                <span
+                  class="iconfont hand"
+                  :class="{'highlight': rating.rateType === 1, 'gray': rating.rateType === 2}"
+                >{{rating.rateType === 1 ? '&#xe62a;' : '&#xe600;'}}</span>
+                <span class="item border"
+                      v-for="(item, index) in rating.recommend"
+                      :key="index"
+                >{{item}}</span>
+              </div>
+              <div class="time">{{_formatDate(rating.rateTime)}}</div>
+            </div>
+          </div>
         </li>
       </ul>
       <!--没有内容-->
@@ -65,6 +97,8 @@
 <script>
 /* 导入js模块化方法 */
 import {formatDate} from 'js/date'
+/* 导入星星评分组件 */
+import star from 'components/common/star/star'
 
 // 选择类型
 const All = 0 // 所有评价
@@ -94,7 +128,14 @@ export default {
           negative: '不满意'
         }
       }
+    },
+    modeType: { // 显示简洁或详尽评论内容区块阀值
+      type: String,
+      default: 'simple' // 默认显示简洁评论内容区块（'simple' or 'complex'）
     }
+  },
+  components: {
+    star
   },
   computed: {
     positives () {
@@ -136,9 +177,9 @@ export default {
         return true
       }
     },
-    // 转换时间戳
+    // 转换时间戳（毫秒）
     _formatDate (time) {
-      let date = new Date(time) // 把时间戳转换为data类型对象
+      let date = new Date(time) // 把时间戳（毫秒）转换为data类型对象
       // yyyy-MM-dd  yyyy-MM-dd hh:mm  yyyy-MM-dd hh:mm:ss （连接符可以更改不影响）
       return formatDate(date, 'yyyy-MM-dd hh:mm') // js模块化方法
     }
@@ -153,7 +194,7 @@ export default {
     margin: 0 .36rem
     font-size: 0
     &::before
-      border-bottom-color: rgba(7,17,27,.3)
+      border-bottom-color: rgba(7,17,27,.1)
     .item
       display: inline-block
       padding: .16rem .24rem
@@ -187,7 +228,7 @@ export default {
       .check-circle
         color: #00c850
     &::before
-      border-bottom-color: rgba(7,17,27,.4)
+      border-bottom-color: rgba(7,17,27,.3)
     .check-circle
       position: relative
       top: .04rem
@@ -202,41 +243,104 @@ export default {
       padding: .32rem 0
       position: relative
       &::before
-        border-bottom-color: rgba(7,17,27,.3)
-      .time
-        margin-bottom: .12rem
-        line-height: .24rem
-        font-size: .2rem
-        color: #93999f
-      .user
-        position: absolute
-        right: 0
-        top: .32rem
-        line-height: .24rem
-        font-size: 0
-        .name
-          display: inline-block
-          margin-right: .12rem
-          vertical-align: top
+        border-bottom-color: rgba(7,17,27,.2)
+      .simple /* 简洁评论内容区块 */
+        .time
+          margin-bottom: .12rem
+          line-height: .24rem
           font-size: .2rem
           color: #93999f
-        .avatar
-          display: inline-block
-          width: .24rem
-          height: .24rem
-          object-fit: cover
-          border-radius: 50%
-      .text
-        line-height: .32rem
-        font-size: .24rem
-        color: #07111b
-        .hand
-          margin-right: .08rem
+        .user
+          position: absolute
+          right: 0
+          top: .32rem
+          line-height: .24rem
+          font-size: 0
+          .name
+            display: inline-block
+            margin-right: .12rem
+            vertical-align: top
+            font-size: .2rem
+            color: #93999f
+          .avatar
+            display: inline-block
+            width: .24rem
+            height: .24rem
+            object-fit: cover
+            border-radius: 50%
+        .text
           line-height: .32rem
           font-size: .24rem
-          &.highlight
-            color: #00a0dc
-          &.gray
+          color: #07111b
+          .hand
+            margin-right: .08rem
+            line-height: .32rem
+            font-size: .24rem
+            &.highlight
+              color: #00a0dc
+            &.gray
+              color: #93999f
+      .complex /* 详尽评论内容区块 */
+        display: flex
+        .avatar
+          flex: 0 0 .56rem
+          width: .56rem
+          margin-right: .24rem
+          font-size: 0
+          img
+            display: inline-block
+            width: .56rem
+            height: .56rem
+            object-fit: cover
+            border-radius: 50%
+        .content
+          position: relative
+          flex: 1
+          .name
+            margin-bottom: .08rem
+            line-height: .24rem
+            font-size: .2rem
+            color: #07111b
+          .star-wrapper
+            margin-bottom: .12rem
+            font-size: 0
+            .score
+              display: inline-block
+              margin-left: .1rem
+              font-size: .2rem
+              color: #f90
+          .text
+            margin-bottom: .16rem
+            line-height: .36rem
+            color: #07111b
+            font-size: .24rem
+          .recommend
+            font-size: 0
+            .hand
+              margin-right: .08rem
+              line-height: .32rem
+              font-size: .24rem
+              &.highlight
+                color: #00a0dc
+              &.gray
+                color: #93999f
+            .item
+              display: inline-block
+              padding: 0 .12rem
+              margin: 0 .16rem .08rem 0
+              border-radius: .04rem
+              font-size: .2rem
+              line-height: .36rem
+              color: #93999f
+              background: #fff
+              &::before
+                border-color: rgba(7, 17, 27, .1)
+          .time
+            position: absolute
+            top: 0
+            right: 0
+            line-height: .24rem
+            font-size: .2rem
             color: #93999f
     .no-rating
       padding: .36rem 0

@@ -36,7 +36,7 @@
             <div class="name">{{seller.name}}</div>
             <div class="star-wrapper">
               <!--star组件接受两个参数-->
-              <star :size="24" :score="seller.score"></star>
+              <star :size="48" :score="seller.score"></star>
             </div>
             <div class="infoWrapper">
               <div class="title">

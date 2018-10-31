@@ -66,9 +66,9 @@ export default {
       background-size: contain
     &.star-24
       .star-item
-        width: .4rem
-        height: .4rem
-        margin-right: .4rem
+        width: .2rem
+        height: .2rem
+        margin-right: .06rem
         &:last-child
           margin-right: 0
         &.on
@@ -79,9 +79,9 @@ export default {
           bgImg('images/star24_off')
     &.star-36
       .star-item
-        width: .6rem
-        height: .6rem
-        margin-right: .16rem
+        width: .3rem
+        height: .3rem
+        margin-right: .12rem
         &:last-child
           margin-right: 0
         &.on
@@ -92,9 +92,9 @@ export default {
           bgImg('images/star36_off')
     &.star-48
       .star-item
-        width: .8rem
-        height: .8rem
-        margin-right: .2rem
+        width: .4rem
+        height: .4rem
+        margin-right: .44rem
         &:last-child
           margin-right: 0
         &.on

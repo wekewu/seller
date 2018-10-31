@@ -39,13 +39,13 @@
         <div class="rating">
           <div class="title">商品评价</div>
           <!--查看评论内容组件-->
-          <ratingCheck
+          <rating-check
             ref="ratingCheck"
             :ratings="productInfo.ratings"
             :select-type="selectType"
             :only-content="onlyContent"
             :type-desc="typeDesc"
-          ></ratingCheck>
+          ></rating-check>
         </div>
       </div>
     </div>
