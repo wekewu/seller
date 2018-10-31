@@ -73,7 +73,7 @@
                 <span class="score">{{rating.score}}</span>
               </div>
               <p class="text">{{rating.text}}</p>
-              <div class="recommend" v-if="rating.recommend.length > 0">
+              <div class="recommend" v-if="rating.recommend && rating.recommend.length">
                 <span
                   class="iconfont hand"
                   :class="{'highlight': rating.rateType === 1, 'gray': rating.rateType === 2}"
