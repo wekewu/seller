@@ -18,7 +18,12 @@ Vue.use(Router)
 }, {
   path: '/seller',
   component: seller
-}] */
+}]
+
+export default new Router({
+  linkActiveClass: 'active',
+  routes
+}) */
 
 export default new Router({
   linkActiveClass: 'active',
